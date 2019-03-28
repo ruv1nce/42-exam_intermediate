@@ -15,7 +15,7 @@ struct s_queue	*init(void)
 {
 	struct s_queue	*q;
 
-	if (!(q = malloc(sizeof(struct s_queue))))
+	if (!(q = malloc(sizeof(*q))))
 		return (NULL);
 	q->first = NULL;
 	q->last = NULL;
@@ -28,7 +28,7 @@ void			enqueue(struct s_queue *queue, void *content)
 
 	if (!queue)
 		return ;
-	if (!(new = malloc(sizeof(struct s_node))))
+	if (!(new = malloc(sizeof(*new))))
 		return ;
 	new->content = content;
 	new->next = NULL;
@@ -83,4 +83,5 @@ int				main()
 	printf("empty no %i\n", isEmpty(q));
 	printf("peek s2 %s", peek(q));
 	printf("deq s2 %s", dequeue(q));
+	printf("empty yes %i\n", isEmpty(q));
 }
