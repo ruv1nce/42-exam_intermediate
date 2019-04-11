@@ -42,62 +42,58 @@ int		ft_strlen(char *s)
 	return (len);
 }
 
-char	*lcsubstr_mult(char **s, int cnt, int maxlen)
+char	*lcsubstr_mult(char **s, int cnt, int firstwordlen)
 {
 	int		i;
 	int		len;
-	int		lencurrent;
+	int		lenprev;
 	int		success;
 	int		word;
 	char	*lcs;
-	char	*lcscurrent;
+	char	*lcsprev;
 	char	*tmp;
 
-	lencurrent = 0;
-	lcs = malloc(maxlen + 1);
-	lcs[maxlen] = 0;
-	lcscurrent = malloc(maxlen + 1);
-	lcscurrent[maxlen] = 0;
-	i = -1;
+	lenprev = 0;
+	/* lcs can't be longer than the first word len */
+	lcs = malloc(firstwordlen + 1);
+	lcs[firstwordlen] = 0;
+	lcsprev = malloc(firstwordlen + 1);
+	lcsprev[firstwordlen] = 0;
 	/* iterate on letters of the first word */
+	i = -1;
 	while (s[0][++i])
 	{
-		/* if this is not the first-letter-loop, change lcs address so that lcscurrent won't get erased */
-		if (len)
-			lcs = tmp;
 		len = 0;
-		/* increase lcs len if the previous lcs was a success */
 		success = 1;
-		while (success && ++len <= maxlen && s[0][i + len - 1])
+		/* if the previous lcs was a success and there are more letters in the first word, grow lcs */
+		while (success && ++len <= firstwordlen && s[0][i + len - 1])
 		{
 			/* add next letter to lcs */
 			lcs[len - 1] = s[0][i + len - 1];
 			lcs[len] = 0;
-			word = 0;
 			/* iterate on words */
-			while (++word < cnt)
+			word = 0;
+			while (success && ++word < cnt)
 			{
 				if (!(ft_strstr(s[word], lcs)))
-				{
 					success = 0;
-					break ;
-				}
 			}
 		}
-		/* decrement len back to the state that was before last while check */
+		/* decrement len back to the state before last while loop condition check */
 		len--;
 		/* if no success, delete last letter */
 		if (!success)
 			lcs[len] = 0;
-		/* if new substring is longer than previously found, save it in lcscurrent */
-		if (len > lencurrent)
+		/* if new substring is longer than previously found, switch lcs and lcsprev */
+		if (len > lenprev)
 		{
-			lencurrent = len;
-			tmp = lcscurrent;
-			lcscurrent = lcs;
+			lenprev = len;
+			tmp = lcsprev;
+			lcsprev = lcs;
+			lcs = tmp;
 		}
 	}
-	return (lcscurrent);
+	return (lcsprev);
 }
 
 int		main(int argc, char **argv)
@@ -106,7 +102,7 @@ int		main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		lcs = lcsubstr_mult(argv + 1, (argc - 1), ft_strlen(argv[1]));
+		lcs = lcsubstr_mult(argv + 1, argc - 1, ft_strlen(argv[1]));
 		while (*lcs)
 		{
 			write(1, lcs, 1);
