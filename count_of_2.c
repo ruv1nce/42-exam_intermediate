@@ -5,21 +5,23 @@ int	count_of_2(int n)
 	int	count;
 	/* decimal coeffecient for iteration */
 	int	coeff;
-	/* previous digit */
-	int	prev;
+	int	n_orig;
 
 	count = 0;
 	coeff = 1;
-	prev = 0;
+	n_orig = n;
+	/* count, how many times 2 is found in each position, starting from rightmost */
 	while (n)
 	{
+		/* for n_orig=125 and n=125 '2' in 3rd position will be found (125/10+1)*1 = 13 times */
 		if (n % 10 > 2)
 			count += (n / 10 + 1) * coeff;
+		/* for n_orig=125 and n=12, '2' in 2nd position will be found 12/10*10 + 125-12*10+1 = 16 times */
 		else if (n % 10 == 2)
-			count += prev + 1;
+			count += (n / 10) * coeff + (n_orig - n * coeff + 1);
+		/* for n_orig=125 and n=1, '2' in 1st position will be found 1/10*10 = 0 times */
 		else
 			count += (n / 10) * coeff;
-		prev = n % 10;
 		n /= 10;
 		coeff *= 10;
 	}
@@ -28,21 +30,5 @@ int	count_of_2(int n)
 
 int	main()
 {
-	printf("  0:  0? %3i\n", count_of_2(0));
-	printf("  2:  1? %3i\n", count_of_2(2));
-	printf(" 11:  1? %3i\n", count_of_2(11));
-	printf(" 25:  9? %3i\n", count_of_2(25));
-	printf(" 35: 14? %3i\n", count_of_2(35));
-	printf("100: 14? %3i\n", count_of_2(100));
-	printf("2115231569: ? %3i\n", count_of_2(2115231569));
-	printf("33:     %3i\n", count_of_2(33));
-	printf("333:    %3i\n", count_of_2(333));
-	printf("3333:   %3i\n", count_of_2(3333));
-	printf("33333:  %3i\n", count_of_2(33333));
-	printf("333333: %3i\n", count_of_2(333333));
-	printf("11:     %1i\n", count_of_2(11));
-	printf("111:    %1i\n", count_of_2(111));
-	printf("1111:   %1i\n", count_of_2(1111));
-	printf("11111:  %1i\n", count_of_2(11111));
-	printf("111111: %1i\n", count_of_2(111111));
+	printf("%1i\n", count_of_2(125));
 }
