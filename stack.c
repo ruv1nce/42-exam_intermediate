@@ -27,7 +27,7 @@ void			*pop(struct s_stack *stack)
 	struct s_node	*tmp;
 	void			*content;
 
-	if (!stack)
+	if (!stack || !stack->top)
 		return (NULL);
 	tmp = stack->top;
 	content = tmp->content;
