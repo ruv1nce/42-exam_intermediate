@@ -79,6 +79,7 @@ int		main()
 	struct s_queue        *q;
 
 	q = init();
+	printf("peek %s\n", peek(q));
 	printf("empty yes %i\n", isEmpty(q));
 	enqueue(q, s1);
 	enqueue(q, s2);
@@ -88,4 +89,5 @@ int		main()
 	printf("empty no %i\n", isEmpty(q));
 	printf("peek s2 %s", peek(q));
 	printf("deq s2 %s", dequeue(q));
+	printf("deq nothing %s", dequeue(q));
 }

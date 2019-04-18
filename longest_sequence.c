@@ -8,29 +8,43 @@ struct s_node
 	struct s_node *right;
 };
 
-int	longest_sequence(struct s_node *node)
+static int	seq;
+
+int	trav(struct s_node *node)
 {
 	int	seqleft;
 	int	seqright;
 
 	if (!node)
 		return (0);
-	seqleft = 1;
-	seqright = 1;
-	if (node->left)
-	{
-		seqleft = longest_sequence(node->left);
-		if (node->left->value == (node->value + 1))
-			seqleft++;
-	}
-	if (node->right)
-	{
-		seqright = longest_sequence(node->right);
-		if (node->right->value == (node->value + 1))
-			seqright++;
-	}
+	/* postorder traversal */
+	seqleft = trav(node->left);
+	seqright = trav(node->right);
+	/* if node has children, evaluate their values; if a sequence continues,
+	 * increment a counter, else zero it out */
+	if (node->left && node->left->value == node->value + 1)
+		seqleft++;
+	else
+		seqleft = 0;
+	if (node-> right && node->right->value == node->value + 1)
+		seqright++;
+	else
+		seqright = 0;
+	/* if current seq is lower, set it to the bigger of left and right
+	 * + 1 for current node */
+	seq = (seq < seqleft + 1 ? seqleft + 1 : seq);
+	seq = (seq < seqright + 1 ? seqright + 1 : seq);
+	/* return bigger of two sequences */
 	return (seqleft > seqright ? seqleft : seqright);
 }
+
+int	longest_sequence(struct s_node *node)
+{
+	seq = 0;
+	trav(node);
+	return (seq);
+}
+
 
 int	main()
 {

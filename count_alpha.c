@@ -1,55 +1,52 @@
 #include <stdio.h>
 
-int        main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int		i;
-	int		j;
-	int		occ[26];
-	char	let[27];
-	int		dp[26];
-	int		flag;
+	unsigned char	let[27];
+	int				occ[26];
+	unsigned char	*s;
+	int				i;
+	int				j;
 
 	if (argc == 2)
 	{
+		s = (unsigned char *)*(argv + 1);
 		i = -1;
-		/* case when the strings contains all 26 letters */
-		let[26] = 0;
-		while (++i < 26)
-		{
-			occ[i] = 0;
+		while (++i < 27)
 			let[i] = 0;
-			dp[i] = -1;
-		}
+		i = -1;
+		while (++i < 26)
+			occ[i] = 0;
 		i = -1;
 		j = 0;
-		while (argv[1][++i])
+		while (s[++i])
 		{
-			if (argv[1][i] >= 'A' && argv[1][i] <= 'Z')
-				argv[1][i] += 32;
-			if (argv[1][i] >= 'a' && argv[1][i] <= 'z')
+			/* uppercase to lower */
+			if (s[i] >= 'A' && s[i] <= 'Z')
+				s[i] += 32;
+			if (s[i] >= 'a' && s[i] <= 'z')
 			{
-				if (dp[argv[1][i] - 97] != -1)
-					occ[dp[argv[1][i] - 97]]++;
-				else
+				/* if it's a first occurrence, add letter to let array */
+				if (!occ[s[i] - 97])
 				{
-					let[j] = argv[1][i];
-					occ[j]++;
-					dp[argv[1][i] - 97] = j;
+					let[j] = s[i];
 					j++;
 				}
+				/* increment the corresponding occurrence cell */
+				occ[s[i] - 97]++;
 			}
 		}
-		flag = 0;
 		i = -1;
+		j = 1;
 		while (let[++i])
 		{
-			if (!flag)
+			if (j)
 			{
-				printf("%i%c", occ[i], let[i]);
-				flag = 1;
+				printf("%i%c", occ[let[i] - 97], let[i]);
+				j = 0;
 			}
 			else
-				printf(", %i%c", occ[i], let[i]);
+				printf(", %i%c", occ[let[i] - 97], let[i]);
 		}
 	}
 	printf("\n");
