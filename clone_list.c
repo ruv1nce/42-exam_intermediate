@@ -1,15 +1,29 @@
-struct s_node
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct s_node
 {
 	int				data;
 	struct s_node	*next;
 	struct s_node	*other;
 }					t_node;
 
-struct s_ref
+typedef struct s_ref
 {
-	t_node			*orig;
-	t_node			*dup;
+	struct s_node	*orig;
+	struct s_node	*dup;
 }					t_ref;
+
+void			insertion_sort(t_ref *table, int len)
+{
+	int	i;
+
+	i = 0;
+	while (++i < len)
+	{
+		if (table[i].orig
+	}
+}
 
 void			add_link(t_node **list, int data)
 {
@@ -59,7 +73,7 @@ struct s_node	*clone_list(struct s_node *node)
 	i = 1;
 	while (tmporig)
 	{
-		add_link(&tmpdup, node->data);
+		add_link(&tmpdup, tmporig->data);
 		tmpdup = tmpdup->next;
 		table[i].orig = tmporig;
 		table[i].dup = tmpdup;
@@ -67,11 +81,17 @@ struct s_node	*clone_list(struct s_node *node)
 		i++;
 	}
 	/* sort ref table by orig list addresses */
-	quicksort(table, len);
+	i = -1;
+	while (++i < len)
+		printf("%p\n", table[i].orig);
+	insertion_sort(table, len);
+	i = -1;
+	while (++i < len)
+		printf("%p\n", table[i].orig);
 	/* traverse orig list, dereferencing other pointers and searching for
 	 * address they point to in ref table; set dup's other pointers to
 	 * point to matching dup node address from the ref table */
-	tmpdup = dup;
+/*	tmpdup = dup;
 	while (node)
 	{
 		if (node->other)
@@ -81,6 +101,49 @@ struct s_node	*clone_list(struct s_node *node)
 			node = node->next;
 			tmpdup = tmpdup->next;
 		}
-	}
+	}*/
 	return (dup);
+}
+
+int		main()
+{
+	t_node	*orig;
+	t_node	*dup;
+	t_node	*tmp;
+
+	orig = NULL;
+	dup = NULL;
+	add_link(&orig, 1);
+	add_link(&orig->next, 2);
+	add_link(&orig->next->next, 3);
+	add_link(&orig->next->next->next, 4);
+	add_link(&orig->next->next->next->next, 5);
+	orig->other = orig->next->next;
+	orig->next->other = NULL;
+	orig->next->next->other = orig;
+	orig->next->next->other = orig;
+	orig->next->next->next->other = orig->next->next->next;
+	orig->next->next->next->next->other = orig->next;
+	tmp = orig;
+	while (tmp)
+	{
+		printf("cur %i ", tmp->data);
+		if (tmp->other)
+			printf("other %i\n", tmp->other->data);
+		else
+			printf("other (nil)\n");
+		tmp = tmp->next;
+	}
+	printf("\n");
+	dup = clone_list(orig);
+	tmp = dup;
+	while (tmp)
+	{
+		printf("cur %i ", tmp->data);
+		if (tmp->other)
+			printf("other %i\n", tmp->other->data);
+		else
+			printf("other (nil)\n");
+		tmp = tmp->next;
+	}
 }
