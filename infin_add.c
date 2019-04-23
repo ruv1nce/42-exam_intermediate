@@ -27,7 +27,7 @@ char	*infin_sub(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;
-	int		prev;
+	int		carry;
 	int		lenres;
 	int		neg;
 	int		tmp;
@@ -57,31 +57,32 @@ char	*infin_sub(char *s1, char *s2)
 	lenres = (len1 > len2) ? len1 + 1 : len2 + 1;
 	res = malloc(lenres + 1);
 	res[lenres] = 0;
-	prev = 0;
-	while (--len1 >= 0 && --len2 >= 0)
+	carry = 0;
+	len1--;
+	len2--;
+	/* subtract digits decade by decade, carrying -1 if previous result was < 0 */
+	while (len1 >= 0 || len2 >= 0)
 	{
-		tmp = ((s1[len1] - '0') - (s2[len2] - '0')) + prev;
-		if (tmp >= 0)
-			res[--lenres] = tmp + '0';
+		tmp = carry;
+		if (len1 >= 0)
+			tmp += s1[len1] - '0';
+		if (len2 >= 0)
+			tmp -= s2[len2] - '0';
+		if (tmp < 0)
+		{
+			carry = -1;
+			tmp += 10;
+		}
 		else
-		{
-			res[--lenres] = tmp + 10 + '0';
-			prev = -1;
-		}
+			carry = 0;
+		res[--lenres] = tmp % 10 + '0';
+		len1--;
+		len2--;
 	}
-	if (len1 < 0)
-	{
-		while (--len2 >= 0)
-			res[--lenres] = s2[len2];
-	}
-	else
-	{
-		while (len1 >= 0)
-		{
-			res[--lenres] = s1[len1];
-			len1--;
-		}
-	}
+	/* skip leading zeroes, if any */
+	while (res[lenres] == '0')
+		lenres++;
+	/* add '-' if result should be negative */
 	if (neg)
 		res[--lenres] = '-';
 	return (&res[lenres]);
@@ -91,7 +92,7 @@ char	*infin_add(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;
-	int		prev;
+	int		carry;
 	int		tmp;
 	int		lenres;
 	char	*res;
@@ -102,40 +103,27 @@ char	*infin_add(char *s1, char *s2)
 	lenres = (len1 > len2) ? len1 + 1 : len2 + 1;
 	res = malloc(lenres + 1);
 	res[lenres] = 0;
-	prev = 0;
-	/* add digits decade by decade, adding 1 if previous result was > 10 */
-	while (--len1 >= 0 && --len2 >= 0)
+	carry = 0;
+	len1--;
+	len2--;
+	/* add digits decade by decade, carrying 1 if previous result was > 9 */
+	while (len1 >= 0 || len2 >= 0)
 	{
-		tmp  = (((s1[len1] - '0') + (s2[len2] - '0')) % 10) + prev + '0';
+		tmp = carry;
+		if (len1 >= 0)
+			tmp += s1[len1] - '0';
+		if (len2 >= 0)
+			tmp += s2[len2] - '0';
 		if (tmp >= 10)
-		{
-			prev = 1;
-			tmp /= 10;
-		}
-		res[--lenres] = tmp + '0';
+			carry = 1;
+		else
+			carry = 0;
+		res[--lenres] = tmp % 10 + '0';
+		len1--;
+		len2--;
 	}
-	/* if ran out of s1 digits, add s2 digits to result (len2 pre-decrementation
-	 * required because it wasn't decremented in the last 'while' check */
-	if (len2 > 0)
-	{
-		while (--len2 >= 0)
-		{
-			res[--lenres] = s2[len2] + prev;
-			prev = 0;
-		}
-	}
-	/* if ran out of s2 digits, add s1 digits to result */
-	else if (len1 > 0)
-	{
-		while (len1 >= 0)
-		{
-			res[--lenres] = s1[len1] + prev;
-			len1--;
-			prev = 0;
-		}
-	}
-	else if (prev)
-		res[--lenres] = prev + '0';
+	if (carry)
+		res[--lenres] = carry + '0';
 	return (&res[lenres]);
 }
 
