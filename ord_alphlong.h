@@ -4,8 +4,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#include <stdio.h>	//KILLME
-
 # define VALID(x) (x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z') || (x >= '0' && x <= '9')
 # define UPPER(x) x >= 'A' && x <= 'Z'
 

@@ -140,30 +140,18 @@ int	main(int argc, char **argv)
 			{
 				result = infin_add(&argv[1][1], &argv[2][1]);
 				write(1, "-", 1);
-				write(1, result, ft_strlen(result));
-				write(1, "\n", 1);
 			}
 			/* if only first is negative */
 			else
-			{
 				result = infin_sub(argv[2], &argv[1][1]);
-				write(1, result, ft_strlen(result));
-				write(1, "\n", 1);
-			}
 		}
 		/* if only second is negative */
 		else if (argv[2][0] == '-')
-		{
 			result = infin_sub(argv[1], &argv[2][1]);
-			write(1, result, ft_strlen(result));
-			write(1, "\n", 1);
-		}
 		/* if both are positive */
 		else
-		{
 			result = infin_add(argv[1], argv[2]);
-			write(1, result, ft_strlen(result));
-			write(1, "\n", 1);
-		}
+		write(1, result, ft_strlen(result));
+		write(1, "\n", 1);
 	}
 }

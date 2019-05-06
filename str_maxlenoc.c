@@ -59,7 +59,7 @@ char	*lcsubstr_mult(char **s, int cnt, int firstwordlen)
 	lcs[firstwordlen] = 0;
 	lcsprev = malloc(firstwordlen + 1);
 	lcsprev[firstwordlen] = 0;
-	/* iterate on letters of the first word */
+	/* iterate through letters of the first word */
 	i = -1;
 	while (s[0][++i])
 	{
@@ -71,7 +71,7 @@ char	*lcsubstr_mult(char **s, int cnt, int firstwordlen)
 			/* add next letter to lcs */
 			lcs[len - 1] = s[0][i + len - 1];
 			lcs[len] = 0;
-			/* iterate on words */
+			/* iterate through words */
 			word = 0;
 			while (success && ++word < cnt)
 			{
