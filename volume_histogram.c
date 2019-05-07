@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	print_grid(char **grid, int ht, int size)
+void	print_grid(int ht, int size, char grid[ht][size])
 {
 	int		x;
 	int		y;
@@ -17,30 +17,14 @@ void	print_grid(char **grid, int ht, int size)
 	printf("\n");
 }
 
-int	volume_histogram(int *histogram, int size)
+int pour_water(int *hist, int size, int ht)
 {
 	int		x;
 	int		y;
-	int		ht;
-	char	**grid;
+	char	grid[ht][size];
 	int		flag;
 	int		water;
 
-	if (!histogram || size < 3)
-		return (0);
-	/* find max bar height */
-	ht = 0;
-	x = -1;
-	while (++x < size)
-		if (ht < histogram[x])
-			ht = histogram[x];
-	if (ht == 0)
-		return (0);
-	/* allocate grid */
-	grid = malloc(sizeof(*grid) * ht);
-	y = -1;
-	while (++y < ht)
-		grid[y] = malloc(sizeof(**grid) * size);
 	/* draw bars and empty space*/
 	/* iterate through bars */
 	x = -1;
@@ -50,13 +34,13 @@ int	volume_histogram(int *histogram, int size)
 		y = -1;
 		while (++y < ht)
 		{
-			if (y < histogram[x])
+			if (y < hist[x])
 				grid[ht - 1 - y][x] = '#';
 			else
 				grid[ht - 1 - y][x] = ' ';
 		}
 	}
-	print_grid(grid, ht, size);
+	print_grid(ht, size, grid);
 	/* mark all spaces that can't hold water (ain't got two walls) */
 	y = -1;
 	while (++y < ht)
@@ -83,7 +67,7 @@ int	volume_histogram(int *histogram, int size)
 					grid[y][x] = 'X';
 		}
 	}
-	print_grid(grid, ht, size);
+	print_grid(ht, size, grid);
 	water = 0;
 	y = -1;
 	while (++y < ht)
@@ -96,6 +80,24 @@ int	volume_histogram(int *histogram, int size)
 		}
 	}
 	return (water);
+}
+
+int	volume_histogram(int *histogram, int size)
+{
+	int		i;
+	int		ht;
+
+	if (!histogram || size < 3)
+		return (0);
+	/* find max bar height */
+	ht = 0;
+	i = -1;
+	while (++i < size)
+		if (ht < histogram[i])
+			ht = histogram[i];
+	if (ht == 0)
+		return (0);
+	return (pour_water(histogram, size, ht));
 }
 
 int	main(int argc, char **argv)

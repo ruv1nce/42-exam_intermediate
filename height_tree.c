@@ -30,21 +30,21 @@ int height_tree(struct s_node *root)
 	/* initialize height as 0 in each call of the recursion */
 	ht = 0;
 	if (!(root))
-		return (0);
+		return (-1);
 	i = 0;
 	/* height will be incremented on all levels except lowest one.
 	 * this way we will discount 1 ht, because edges = (levels - 1) */
-	if (root->nodes[i])
+	if (root->nodes)
 	{
 		while (root->nodes[i])
 		{
 			/* store the return of the recursion in httmp.
 			 * only overwrite ht if the result is bigger */
-			httmp = height_tree(root->nodes[i]);
+			httmp = 1 + height_tree(root->nodes[i]);
 			ht = (httmp > ht) ? httmp : ht;
 			i++;
 		}
-		ht++;
+		// ht++;
 	}
 	return (ht);
 }

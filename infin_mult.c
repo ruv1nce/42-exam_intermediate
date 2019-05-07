@@ -1,117 +1,92 @@
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int		ft_strlen(char *s)
 {
 	int	len;
+
 	len = 0;
-	while (*s)
-	{
+	while (s[len])
 		len++;
-		s++;
-	}
 	return (len);
 }
 
-char	*infin_add(char *s1, char *s2)
+char	*mult(char *first, char *second, int len1, int len2)
 {
-	int		len1;
-	int		len2;
-	int		carry;
-	int		tmp;
+	int		*res;
 	int		lenres;
-	char	*res;
+	int		offset;
+	int		j;
+	int		k;
+	char	*out;
+	int		carry;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	/* the addition result can be at most (longer component len + 1) long */
-	lenres = (len1 > len2) ? len1 + 1 : len2 + 1;
-	res = malloc(lenres + 1);
-	res[lenres] = 0;
-	carry = 0;
-	len1--;
-	len2--;
-	/* add digits decade by decade, carrying 1 if previous result was > 10 */
-	while (len1 >= 0 || len2 >= 0)
+	lenres = len1 + len2;
+	res = malloc(sizeof(*res) * lenres);
+	out = malloc(lenres + 1);
+	out[lenres] = 0;
+	k = -1;
+	while (++k < lenres)
 	{
-		tmp = carry;
-		if (len1 >= 0)
-			tmp += s1[len1] - '0';
-		if (len2 >= 0)
-			tmp += s2[len2] - '0';
-		if (tmp >= 10)
-			carry = 1;
-		else
-			carry = 0;
-		res[--lenres] = tmp % 10 + '0';
-		len1--;
-		len2--;
+		res[k] = 0;
+		out[k] = 0;
 	}
-	if (carry)
-		res[--lenres] = carry + '0';
-	return (&res[lenres]);
-}
-char	*infin_mult(char *s1, char *s2)
-{
-	int		len1;
-	int		len1tmp;
-	int		len2;
-	int		carry;
-	int		tmp;
-	int		lenmult;
-	int		lenres;
-	int		coeff;
-	char	*res;
-	char	*mult;
-
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	/* the multiplication result can be at most (len1 + len2) long */
-	lenmult = len1 + len2;
-	mult = malloc(lenmult + 1);
-	tmp = -1;
-	while (++tmp < lenmult)
-		mult[tmp] = 0;
-	carry = 0;
-	len1--;
-	len2--;
-	coeff = 0;
-	lenres = lenmult;
-	/* multiply s1 by s2's digits */
-	while (len2 >= 0)
+	/* iterate through *first digits from end to start, with each
+	   iteration increase offset to store results in res with offset */
+	offset = 0;
+	while (--len1 >= 0)
 	{
-		len1tmp = len1;
-		lenmult = lenres - coeff;
-		while (len1tmp >= 0)
+		/* iterate through *second digits from end to start using j;
+		   save multiplication results right to left in res */
+		j = len2;
+		k = lenres;
+		while (--j >= 0)
 		{
-			tmp = (s1[len1tmp] * s2[len2] + carry);
-			mult[--lenmult] = tmp % 10 + '0';
-			carry = tmp / 10;
-			len1tmp--;
+			k--;
+			res[k - offset] += (first[len1] - '0') * (second[j] - '0');
 		}
-		len2--;
-		coeff++;
-		res = infin_add(res, mult);
+		offset++;
 	}
-	return (res);
+	k = lenres;
+	carry = 0;
+	while (--k >= 0)
+	{
+		j = res[k] + carry;
+		out[k] += j % 10 + '0';
+		carry = j / 10;
+	}
+	while (*out == '0')
+		out++;
+	return (out);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
-	char	*result;
-	int		neg;
+	char	*res;
+	int		sign1;
+	int		sign2;
 
+	sign1 = 0;
+	sign2 = 0;
 	if (argc == 3)
 	{
-		/* check if the result should be negative */
-		neg = ((argv[1][0] == '-' && argv[2][0] != '-') || (argv[1][0] != '-' && argv[2][0] == '-')) ? 1 : 0;
-		/* move argv pointers past '-' if any */
-		*(argv + 1) = (argv[1][0] == '-') ? *(argv + 1) + 1 : *(argv + 1);
-		*(argv + 2) = (argv[2][0] == '-') ? *(argv + 2) + 1: *(argv + 2);
-		result = infin_mult(argv[1], argv[2]);
-		if (neg)
+		if (argv[1][0] == '-')
+		{
+			sign1 = -1;
+			(*(argv + 1))++;
+		}
+		if (argv[2][0] == '-')
+		{
+			sign2 = -1;
+			(*(argv + 2))++;
+		}
+		res = mult(argv[1], argv[2], ft_strlen(argv[1]), ft_strlen(argv[2]));
+		if (*res && ((!sign1 && sign2) || (sign1 && !sign2)))
 			write(1, "-", 1);
-		write(1, result, ft_strlen(result));
+		if (*res)
+			write(1, res, ft_strlen(res));
+		else
+			write(1, "0", 1);
 		write(1, "\n", 1);
 	}
 }

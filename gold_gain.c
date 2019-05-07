@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define SIZE 5
+#include <stdio.h>	// KILLME
+#include <stdlib.h>	// KILLME
+#define SIZE 3	// KILLME
 #define MAX(a,b) a > b ? a : b
 
 int	gold_gain(int **mine, int n)
@@ -37,7 +37,7 @@ int	gold_gain(int **mine, int n)
 	}
 	/* find biggest number in column 0 */
 	y = -1;
-	while (++y < n - 1)
+	while (++y < n)
 		result = (mine[y][0] > result ? mine[y][0] : result);
 	return (result);
 }
@@ -47,11 +47,9 @@ int	main()
 	int	x;
 	int	y;
 	int arr[SIZE][SIZE] = {
-		{1, 3, 1, 3, 1},
-		{2, 2, 2, 1, 2},
-		{5, 0, 2, 1, 0},
-		{0, 0, 0, 0, 0},
-		{0, 0, 0, 15, 0}
+		{1, 2, 3},
+		{3, 4, 8},
+		{9, 6, 7}
 	};
 	int	**mine;
 
