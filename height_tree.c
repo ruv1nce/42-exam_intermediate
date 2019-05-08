@@ -44,7 +44,6 @@ int height_tree(struct s_node *root)
 			ht = (httmp > ht) ? httmp : ht;
 			i++;
 		}
-		// ht++;
 	}
 	return (ht);
 }

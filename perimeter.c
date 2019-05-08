@@ -1,69 +1,58 @@
 #include <stdio.h>
 
-typedef struct s_node
+typedef struct		s_node
 {
-	int value;
-	struct s_node *right;
-	struct s_node *left;
-} t_node;
+	int				value;
+	struct s_node	*right;
+	struct s_node	*left;
+}					t_node;
 
-void print_perimeter(struct s_node *root, struct s_node **root_orig, struct s_node **min, struct s_node **max)
+void	print_left(struct s_node *root)
 {
-	if (!root)
-		return;
-	if (*min)
-	{
-		/* print nodes on the way to min */
-		if (root != *root_orig)
-			printf(" %i", root->value);
-		if (root == *min)
-			*min = NULL;
-	}
-	/* print all other leafs after min */
-	else if (!*min && *max && !root->left && !root->right)
+	if (root->left || root->right)
 		printf(" %i", root->value);
-	print_perimeter(root->left, root_orig, min, max);
-	print_perimeter(root->right, root_orig, min, max);
-	/* print nodes on the way back from max except original root */
-	if (!*max && root != *root_orig)
+	if (root->left)
+		print_left(root->left);
+}
+
+void	print_leafs(struct s_node *root)
+{
+	if (root->left)
+		print_leafs(root->left);
+	if (root->right)
+		print_leafs(root->right);
+	if (!root->left && !root->right)
 		printf(" %i", root->value);
-	if (root == *max)
-		*max = NULL;
 }
 
-struct s_node *tree_min(struct s_node *root)
+void	print_right(struct s_node *root)
 {
-	while (root->left)
-		root = root->left;
-	return (root);
+	if (root->right)
+		print_right(root->right);
+	if (root->right || root->left)
+		printf(" %i", root->value);
 }
 
-struct s_node *tree_max(struct s_node *root)
+void	perimeter(struct s_node *root)
 {
-	while (root->right)
-		root = root->right;
-	return (root);
-}
-
-void perimeter(struct s_node *root)
-{
-	struct s_node *min;
-	struct s_node *max;
-
 	if (!root)
 		return;
 	/* print original root */
 	printf("%i", root->value);
-	min = tree_min(root);
-	max = tree_max(root);
-	min = (min == root) ? NULL : min;
-	max = (max == root) ? NULL : max;
-	if (min != max)
-		print_perimeter(root, &root, &min, &max);
+	if (root->left)
+	{
+		print_left(root->left);
+		print_leafs(root->left);
+	}
+	if (root->right)
+	{
+		print_leafs(root->right);
+		print_right(root->right);
+	}
 	printf("\n");
 }
 
-int main()
+int		main()
 {
 	t_node small = {
 		.value = 49,
@@ -72,6 +61,38 @@ int main()
 			.right = &(t_node){.value = 44}
 		}
 	};
+	perimeter(&small);
+	printf("\n");
+
+	t_node small2 = {
+		.value = 49,
+		.right = &(t_node){
+			.value = 58,
+			.left = &(t_node){.value = 44}
+		}
+	};
+	perimeter(&small2);
+	printf("\n");
+
+	t_node small3 = {
+		.value = 49,
+		.left = &(t_node){
+			.value = 58,
+			.right = &(t_node){.value = 44}
+		}
+	};
+	perimeter(&small3);
+	printf("\n");
+
+	t_node small4 = {
+		.value = 49,
+		.left = &(t_node){
+			.value = 58,
+			.left = &(t_node){.value = 44}
+		}
+	};
+	perimeter(&small4);
+	printf("\n");
 
 	t_node root = {
 		.value = 92,
@@ -145,5 +166,4 @@ int main()
 	};
 	perimeter(&root);
 	printf("\n");
-	perimeter(&small);
 }
