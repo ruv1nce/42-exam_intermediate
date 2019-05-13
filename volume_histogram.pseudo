@@ -1,0 +1,6 @@
+1. Find maximum bar height.
+2. Pass histogram, size and height to another function so that both size and height can be used as lengths of a variable-length array.
+3. In another function, declare a 2D char array with height and size as its lengths.
+4. Draw the histogram (fill this newly created map, or grid, with spaces and hashes).
+5. Iterate through each row of grid, left to right, and then right to left, filling cells which cannot hold water (because they are not located between two walls).
+6. Count the remaining spaces in grid.
