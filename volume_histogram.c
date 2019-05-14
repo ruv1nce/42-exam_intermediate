@@ -57,7 +57,7 @@ int pour_water(int *hist, int size, int ht)
 		x = size;
 		while (--x >= 0)
 		{
-			if (grid[y][x] == '#')
+			if (grid[y][x] == '#' || grid[y][x] == 'X')
 				break;
 			else
 				grid[y][x] = 'X';
