@@ -1,5 +1,7 @@
 ## 42-exam_intermediate
 
+All solutions passed 42 examshell in April 2019
+
 ### strings
 
 **count_alpha**<br />
