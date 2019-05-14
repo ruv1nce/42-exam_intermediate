@@ -22,7 +22,6 @@ int pour_water(int *hist, int size, int ht)
 	int		x;
 	int		y;
 	char	grid[ht][size];
-	int		flag;
 	int		water;
 
 	/* draw bars and empty space*/
@@ -46,32 +45,22 @@ int pour_water(int *hist, int size, int ht)
 	while (++y < ht)
 	{
 		/* go left to right */
-		flag = 0;
 		x = -1;
 		while (++x < size)
 		{
 			if (grid[y][x] == '#')
-			{
-				flag = 1;
 				break;
-			}
 			else
-				if (!flag)
-					grid[y][x] = 'X';
+				grid[y][x] = 'X';
 		}
 		/* go right to left */
 		x = size;
-		flag = 0;
 		while (--x >= 0)
 		{
 			if (grid[y][x] == '#')
-			{
-				flag = 1;
 				break;
-			}
 			else
-				if (!flag)
-					grid[y][x] = 'X';
+				grid[y][x] = 'X';
 		}
 	}
 	print_grid(ht, size, grid);
