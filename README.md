@@ -1,6 +1,6 @@
 ## 42-exam_intermediate
 
-All solutions passed 42 examshell in April 2019
+All solutions except *clone_list_n2* passed 42 examshell in April 2019
 
 ### strings
 
@@ -43,7 +43,7 @@ Given two sorted arrays, print numbers present in both.<br />
 
 **clone_list**<br />
 Duplicate a linked list with each node containing a random pointer.<br />
-O(n2): naive solution.<br />
+O(n2): naive solution. Timeouts in examshell.<br />
 O(n*logn): better solution, leaving the list unmodified.<br />
 O(n): fastest solution, involving original list modification and then restoring.<br />
 
