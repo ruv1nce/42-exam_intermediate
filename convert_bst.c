@@ -1,11 +1,9 @@
-#include "../alg/bstree.h"
-/*
 struct s_node
 {
 	int           value;
 	struct s_node *right;
 	struct s_node *left;
-};*/
+};
 
 struct s_node	*bst_min(struct s_node *root)
 {
