@@ -1,5 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 
 struct s_node
 {
@@ -29,10 +29,11 @@ struct s_node	*newnode()
 	struct s_node	*new;
 
 	new = malloc(sizeof(*new));
-	new->next = NULL;
+	new->next = 0;
 	return (new);
 }
 
+/*
 int	main()
 {
 	struct s_node	*a;
@@ -52,3 +53,4 @@ int	main()
 	a->next->next->next->next = newnode();
 	printf("%i\n", is_looping(b));
 }
+*/

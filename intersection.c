@@ -1,5 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 
 typedef struct s_node
 {
@@ -13,7 +13,7 @@ void			add_link(t_node **list)
 
 	if (!(new = malloc(sizeof(*new))))
 		return ;
-	new->next = NULL;
+	new->next = 0;
 	if (!*list)
 		*list = new;
 	else
@@ -37,9 +37,10 @@ void	*intersection(struct s_node *lst1, struct s_node *lst2)
 		}
 		uno = uno->next;
 	}
-	return (NULL);
+	return (0);
 }
 
+/*
 int		main()
 {
 	t_node	*one;
@@ -77,3 +78,4 @@ int		main()
 	tmp = intersection(one, two);
 	printf("inter %p\n", tmp);
 }
+*/

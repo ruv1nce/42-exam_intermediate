@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 
 void	equation(int n)
 {
@@ -19,6 +19,7 @@ void	equation(int n)
 	}
 }
 
+/*
 int		main()
 {
 	printf("42\n");
@@ -28,3 +29,4 @@ int		main()
 	printf("\n0\n");
 	equation(0);
 }
+*/

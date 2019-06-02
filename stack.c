@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 #include <stdlib.h>
 
 struct s_node
@@ -63,6 +63,7 @@ int				isEmpty(struct s_stack *stack)
 	return (0);
 }
 
+/*
 int				main()
 {
 	char	s1[] = "fuck\n";
@@ -79,3 +80,4 @@ int				main()
 	printf("pop s1 %s", pop(stack));
 	printf("empty yes %i\n", isEmpty(stack));
 }
+*/

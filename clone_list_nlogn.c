@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 typedef struct s_node
 {
@@ -163,10 +163,11 @@ struct s_node	*clone_list(struct s_node *node)
 	return (dup);
 }
 
+/*
 int		main()
 {
 	t_node	*orig;
-	/* orig2 is needed to make sure that sorting works */
+	// orig2 is needed to make sure that sorting works
 	t_node	*orig2;
 	t_node	*dup;
 	t_node	*tmp;
@@ -210,3 +211,4 @@ int		main()
 		tmp = tmp->next;
 	}
 }
+*/

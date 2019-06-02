@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 
 int	is_anagram(char *a, char *b)
 {
@@ -25,8 +25,10 @@ int	is_anagram(char *a, char *b)
 	return (1);
 }
 
+/*
 int	main(int argc, char ** argv)
 {
 	if (argc > 1)
 		printf("%i\n", is_anagram(argv[1], argv[2]));
 }
+*/

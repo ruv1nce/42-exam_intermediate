@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h>	// KILLME
+// #include <stdio.h>
 
 typedef struct		s_node
 {
@@ -72,6 +72,7 @@ struct s_node	*clone_list(struct s_node *node)
 	return (dup);
 }
 
+/*
 int		main()
 {
 	t_node	*orig;
@@ -119,3 +120,4 @@ int		main()
 		tmp = tmp->next;
 	}
 }
+*/

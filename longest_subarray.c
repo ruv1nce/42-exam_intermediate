@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <string.h>
 
 #define ADD(x) ((x - '0') % 2 == 0 ? 1 : -1)
@@ -8,7 +7,7 @@ char	*longest_subarray(char *arr)
 	int i, j, start, sum = 0, maxlen = 0, len = strlen(arr);
 	char *s;
 
-	/* increment starting index in outer loop */	
+	/* increment starting index in outer loop */
 	for (i = 0; i < len; i++)
 	{
 		sum = ADD(arr[i]);

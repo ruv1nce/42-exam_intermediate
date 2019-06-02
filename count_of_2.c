@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 
 int	count_of_2(int n)
 {
@@ -28,7 +28,9 @@ int	count_of_2(int n)
 	return (count);
 }
 
+/*
 int	main()
 {
 	printf("%1i\n", count_of_2(125));
 }
+*/

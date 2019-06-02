@@ -1,113 +1,76 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int		ft_strstr(const char *haystack, const char *needle)
+int ft_strlen(char *s)
 {
-	char	*ptr;
-	char	*needorig;
+	int len = 0;
 
-	needorig = (char *)needle;
-	if (!*needle)
-		return (1);
-	while (*haystack)
-	{
-		if (*haystack == *needle)
-		{
-			ptr = (char *)haystack;
-			while (*haystack == *needle && *needle)
-			{
-				haystack++;
-				needle++;
-			}
-			if (!*needle)
-				return (1);
-			haystack = ptr;
-			needle = needorig;
-		}
-		haystack++;
-	}
-	return (0);
-}
-
-int		ft_strlen(char *s)
-{
-	int	len;
-
-	len = 0;
-	while (*s)
-	{
+	while (s[len])
 		len++;
-		s++;
-	}
 	return (len);
 }
 
-char	*lcsubstr_mult(char **s, int cnt, int firstwordlen)
+int ft_strstr(char *s, char *lcs, int end)
 {
-	int		i;
-	int		len;
-	int		lenprev;
-	int		success;
-	int		word;
-	char	*lcs;
-	char	*lcsprev;
-	char	*tmp;
+	int success = 0;
 
-	lenprev = 0;
-	/* lcs can't be longer than the first word len */
-	lcs = malloc(firstwordlen + 1);
-	lcs[firstwordlen] = 0;
-	lcsprev = malloc(firstwordlen + 1);
-	lcsprev[firstwordlen] = 0;
-	/* iterate through letters of the first word */
-	i = -1;
-	while (s[0][++i])
+	/* iterate through haystack if no success*/
+	for (int i = 0; s[i] && !success; i++)
 	{
-		len = 0;
+		/* iterate through lcs */
 		success = 1;
-		/* if the previous lcs was a success and there are more letters in the first word, grow lcs */
-		while (success && ++len <= firstwordlen && s[0][i + len - 1])
+		for (int j = 0; j <= end; j++, i++)
 		{
-			/* add next letter to lcs */
-			lcs[len - 1] = s[0][i + len - 1];
-			lcs[len] = 0;
-			/* iterate through words */
-			word = 0;
-			while (success && ++word < cnt)
+			if (s[i] != lcs[j])
 			{
-				if (!(ft_strstr(s[word], lcs)))
-					success = 0;
+				success = 0;
+				break;
 			}
 		}
-		/* decrement len back to the state before last while loop condition check */
-		len--;
-		/* if no success, delete last letter */
-		if (!success)
-			lcs[len] = 0;
-		/* if new substring is longer than previously found, switch lcs and lcsprev */
-		if (len > lenprev)
-		{
-			lenprev = len;
-			tmp = lcsprev;
-			lcsprev = lcs;
-			lcs = tmp;
-		}
 	}
-	return (lcsprev);
+	return (success);
 }
 
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	char	*lcs;
+	/* initialize lcs_start and _end in such a way so that (_end - _start) < 0 */
+	int maxlen, lcs_start = 1, lcs_end = 0;
 
 	if (argc > 1)
 	{
-		lcs = lcsubstr_mult(argv + 1, argc - 1, ft_strlen(argv[1]));
-		while (*lcs)
+		maxlen = ft_strlen(argv[1]);
+		/* iterate through first letters of the first string */
+		for (int start = 0, success = 1; start < maxlen; start++)
 		{
-			write(1, lcs, 1);
-			lcs++;
+			success = 1;
+			/* grow lcs if successfully found previous one in all strings */
+			for (int end = start; end < maxlen && success; end++)
+			{
+				success = 1;
+				/* iterate through strings to find the current lcs */
+				for (int i = 2; i < argc && success; i++)
+				{
+					if (!(ft_strstr(argv[i], &argv[1][start], end - start)))
+					{
+						success = 0;
+						break;
+					}
+				}
+				/* if lcs not found in all strings, break to outer cycle */
+				if (!success)
+					break;
+				/* if found current lcs in all strings, and its longer than
+                 *      prevoius lcs, save new lcs */
+				if (end - start > lcs_end - lcs_start)
+				{
+					lcs_start = start;
+					lcs_end = end;
+				}
+			}
 		}
+		/* if (_end - _start) >= 0 then a valid lcs was found */
+		if (lcs_end - lcs_start >= 0)
+			write(1, &argv[1][lcs_start], lcs_end - lcs_start + 1);
 	}
 	write(1, "\n", 1);
 }

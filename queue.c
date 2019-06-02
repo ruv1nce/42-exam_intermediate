@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h> // KILLME
+// #include <stdio.h>
 
 struct s_node {
 	void *content;
@@ -72,6 +72,7 @@ int		isEmpty(struct s_queue *queue)
 	return (0);
 }
 
+/*
 int		main()
 {
 	char        s1[] = "fuck\n";
@@ -91,3 +92,4 @@ int		main()
 	printf("deq s2 %s", dequeue(q));
 	printf("deq nothing %s", dequeue(q));
 }
+*/

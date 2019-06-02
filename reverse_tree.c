@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 
 struct s_node
 {
@@ -32,6 +32,7 @@ void	reverse_tree(struct s_node *root)
 	}
 }
 
+/*
 int	main()
 {
 	struct s_node	*root;
@@ -69,3 +70,4 @@ int	main()
 	in_trav(root);
 	printf("\n");
 }
+*/

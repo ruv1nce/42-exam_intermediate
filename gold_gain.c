@@ -1,6 +1,6 @@
-#include <stdio.h>	// KILLME
-#include <stdlib.h>	// KILLME
-#define SIZE 3	// KILLME
+// #include <stdio.h>
+// #include <stdlib.h>
+// #define SIZE 3
 #define MAX(a,b) a > b ? a : b
 
 int	gold_gain(int **mine, int n)
@@ -42,6 +42,7 @@ int	gold_gain(int **mine, int n)
 	return (result);
 }
 
+/*
 int	main()
 {
 	int	x;
@@ -67,3 +68,4 @@ int	main()
 		printf("\n");
 	}
 }
+*/

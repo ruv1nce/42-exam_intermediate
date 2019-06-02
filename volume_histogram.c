@@ -1,6 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 
+/*
 void	print_grid(int ht, int size, char grid[ht][size])
 {
 	int		x;
@@ -17,6 +18,7 @@ void	print_grid(int ht, int size, char grid[ht][size])
 	printf("\n");
 }
 
+*/
 int pour_water(int *hist, int size, int ht)
 {
 	int		x;
@@ -39,7 +41,7 @@ int pour_water(int *hist, int size, int ht)
 				grid[ht - 1 - y][x] = ' ';
 		}
 	}
-	print_grid(ht, size, grid);
+	// print_grid(ht, size, grid);
 	/* mark all spaces that can't hold water (ain't got two walls) */
 	y = -1;
 	while (++y < ht)
@@ -63,7 +65,7 @@ int pour_water(int *hist, int size, int ht)
 				grid[y][x] = 'X';
 		}
 	}
-	print_grid(ht, size, grid);
+	// print_grid(ht, size, grid);
 	water = 0;
 	y = -1;
 	while (++y < ht)
@@ -96,6 +98,7 @@ int	volume_histogram(int *histogram, int size)
 	return (pour_water(histogram, size, ht));
 }
 
+/*
 int	main(int argc, char **argv)
 {
 	int	*hist;
@@ -110,3 +113,4 @@ int	main(int argc, char **argv)
 		printf("%i\n", volume_histogram(hist, argc - 1));
 	}
 }
+*/

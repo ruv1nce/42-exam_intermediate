@@ -83,7 +83,7 @@ void	flood_fill(char *line, int y, int x, int wd, int ht, char num)
 	if (x < wd - 2 && line[y * wd + x + 1] == 'X')
 		flood_fill(line, y, x + 1, wd, ht, num);
 	/* for ht = 6 values of y are 0 to 5,
-	 * so to go down y must be at mose 4 */
+	 * so to go down y must be at most 4 */
 	if (y < ht - 1 && line[(y + 1) * wd + x] == 'X')
 		flood_fill(line, y + 1, x, wd, ht, num);
 	if (x > 0 && line[y * wd + x - 1] == 'X')

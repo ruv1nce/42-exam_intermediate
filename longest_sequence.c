@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 
 struct s_node
 {
@@ -45,7 +45,7 @@ int	longest_sequence(struct s_node *node)
 	return (seq);
 }
 
-
+/*
 int	main()
 {
 	struct s_node	*root;
@@ -82,3 +82,4 @@ int	main()
 
 	printf("%i\n", longest_sequence(root));
 }
+*/

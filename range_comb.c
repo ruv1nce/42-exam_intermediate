@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 static int	count;
 
@@ -71,6 +71,7 @@ int		**range_comb(int n)
 	return (perms);
 }
 
+/*
 int		main(int argc, char **argv)
 {
 	int	**perms;
@@ -92,3 +93,4 @@ int		main(int argc, char **argv)
 		}
 	}
 }
+*/

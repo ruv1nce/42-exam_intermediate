@@ -1,5 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 
 struct s_node
 {
@@ -17,7 +17,7 @@ struct s_node	*create_node(int val)
 	new->nodes = malloc(sizeof(*new->nodes) * 4);
 	i = -1;
 	while (++i < 4)
-		new->nodes[i] = NULL;
+		new->nodes[i] = 0;
 	return (new);
 }
 
@@ -48,6 +48,7 @@ int height_tree(struct s_node *root)
 	return (ht);
 }
 
+/*
 int	main()
 {
 	struct s_node	*root;
@@ -68,3 +69,4 @@ int	main()
 
 	printf("%i\n", height_tree(root));
 }
+*/

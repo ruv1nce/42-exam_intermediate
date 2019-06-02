@@ -52,6 +52,7 @@ void	perimeter(struct s_node *root)
 	printf("\n");
 }
 
+/*
 int		main()
 {
 	t_node small = {
@@ -167,3 +168,4 @@ int		main()
 	perimeter(&root);
 	printf("\n");
 }
+*/

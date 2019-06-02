@@ -1,4 +1,4 @@
-#include <stdio.h>	// KILLME
+// #include <stdio.h>
 
 struct s_node
 {
@@ -33,11 +33,11 @@ int	can_split(struct s_node *n)
 	node_count = 0;
 	/* first run of descendants is just for counting nodes */
 	node_count = descendants(n, node_count, &split);
-	printf("node count %i\n", node_count);	// KILLME
+	// printf("node count %i\n", node_count);
 	split = 0;
 	/* second run is for checking for split possibility */
 	descendants(n, node_count, &split);
-	printf("%i\n", split);	// KILLME
+	// printf("%i\n", split);
 	if (split)
 		return (1);
 	return (0);
