@@ -105,7 +105,3 @@ Maximize the loot of a miner in a gold mine.<br />
 
 **volume_histogram**<br />
 Calculate how many units of water can a histogram hold if it was poured across the  top.<br />
-
-
-TODO:</br>
-str_maxlenoc: easier-to-read version</br>
