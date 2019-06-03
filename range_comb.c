@@ -1,96 +1,94 @@
+//#include <stdio.h>
 #include <stdlib.h>
-// #include <stdio.h>
 
 static int	count;
 
-int		factorial(int n)
+int		fact(int n)
 {
-	int	fac;
+	int fact = n;
 
-	fac = n;
-	while (--n > 1)
-		fac *= n;
-	return (fac);
+	while (--n)
+		fact *= n;
+	return (fact);
 }
 
-void	permute(int **perms, int *sol, unsigned char *dp, int n, int i)
+void	permute(int **tab, int *sol, int *dp, int n, int pos)
 {
-	int	k;
+	int	num, i;
 
-	/* save solution to perms upon reaching last int in range */
-	if (i == n)
+	/* save solution to tab upon going beyond range [0 - n-1] */
+	if (pos == n)
 	{
-		k = -1;
-		while (++k < n)
-			perms[count][k] = sol[k];
-		/* increment perms count */
+		i = -1;
+		while (++i < n)
+			tab[count][i] = sol[i];
+		/* increment tab counter */
 		count++;
 	}
 	else
 	{
 		/* iterate through integers from 0 to n-1 */
-		k = -1;
-		while (++k < n)
+		num = -1;
+		while (++num < n)
 		{
-			/* if int k is absent from current solution, add it to sol
-			 * and mark this fact in dp, then iterate through sol indices */
-			if (!dp[k])
+			/* if num is absent from current solution, add it to sol and mark
+			 * this fact in dp, then iterate through sol positions with recursion */
+			if (!dp[num])
 			{
-				sol[i] = k;
-				dp[k] = 1;
-				permute(perms, sol, dp, n, i + 1);
-				/* after finding solution, unmark k index in dp */
-				dp[k] = 0;
+				sol[pos] = num;
+				dp[num] = 1;
+				permute(tab, sol, dp, n, pos + 1);
+				/* after finding solution, unmark num index in dp (backtrack) */
+				dp[num] = 0;
 			}
 		}
+
 	}
 }
 
 int		**range_comb(int n)
 {
-	int				**perms;
-	int				sol[n];
-	unsigned char	dp[n];
-	int				combs;
+	int	**tab;
+	int	sol[n];
+	int	dp[n];
+	int combs;
 	int	i;
-
+	
 	if (n < 1)
-		return (NULL);
+		return (0);
 	i = -1;
 	while (++i < n)
 		dp[i] = 0;
-	combs = factorial(n);
-	if (!(perms = malloc(sizeof(*perms) * (combs + 1))))
-		return (NULL);
-	/* NULL-terminated array */
-	perms[combs] = NULL;
-	while (--combs >= 0)
-		if (!(perms[combs] = malloc(sizeof(**perms) * n)))
-			return (NULL);
-	permute(perms, sol, dp, n, 0);
-	return (perms);
+	combs = fact(n);
+	tab = malloc(sizeof(*tab) * (combs + 1));
+	/* NULL-terminate array */
+	tab[combs] = 0;
+	i = -1;
+	while (++i < combs)
+		tab[i] = malloc(sizeof(**tab) * n);
+	permute(tab, sol, dp, n, 0);
+	return (tab);
 }
 
 /*
-int		main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	int	**perms;
-	int	n;
-	int	i;
-	int	j;
+	int	**tab;
+	int	n, i;
 
 	if (argc == 2)
 	{
 		n = atoi(argv[1]);
-		perms = range_comb(n);
-		j = -1;
-		while (perms[++j])
+		tab = range_comb(n);
+		while (*tab)
 		{
 			i = -1;
 			while (++i < n)
-				printf("%i ", perms[j][i]);
+				printf("%i ", (*tab)[i]);
 			printf("\n");
+			tab++;
 		}
+
 	}
 }
 */

@@ -42,3 +42,48 @@ int	can_split(struct s_node *n)
 		return (1);
 	return (0);
 }
+
+/*
+void	trav(node *root)
+{
+	if (root)
+	{
+		trav(root->left);
+		printf("%i\n", root->value);
+		trav(root->right);
+	}
+}
+
+int main()
+{
+	node	root1 = {
+		.value = 28,
+		.left = &(node){
+			.value = 51,
+			.left = &(node){
+				.value = 26,
+				.left = &(node){.value = 76},
+				.right = &(node){.value = 13}
+			},
+			.right = &(node){.value = 48}
+		}
+	};
+
+	node	root2 = {
+		.value = 28,
+		.left = &(node){
+			.value = 51,
+			.left = &(node){
+				.value = 26,
+				.left = &(node){.value = 76}
+			},
+			.right = &(node){.value = 48}
+		}
+	};
+
+//	trav(&root1);
+	printf("split %i\n", can_split(&root1));
+//	trav(&root2);
+	printf("split %i\n", can_split(&root2));
+}
+*/
